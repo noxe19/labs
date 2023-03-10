@@ -60,7 +60,7 @@ with open('test(lab1).txt', 'r') as file: #открываем файл
                 print(f'{j} {d3[int(num)]}')
         elif n1 == 1:
             if neg == 1:
-                print(work_buffer[::-1] + '-')
+                print(work_buffer[::-1])
             else:
                 print(work_buffer[::-1])
         work_buffer = ''
