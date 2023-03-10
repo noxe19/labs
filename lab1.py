@@ -9,6 +9,10 @@
 Натуральные числа. Выводить, меняя порядок цифр в них на обратный. Для чисел, состоящих из
 одинаковых цифр вывод должен иметь вид – « 120 единиц».
 '''
+
+d1 = {1: 'единицы', 2: 'двойки', 3: 'тройки', 4: 'четвёрки', 5: 'пятёрки', 6: 'шестёрки', 7: 'семёрки', 8: 'восмёрки', 9: 'девятки',}
+d2 = {1: 'единица', 2: 'двойка', 3: 'тройка', 4: 'четвёрка', 5: 'пятёрка', 6: 'шестёрка', 7: 'семёрка', 8: 'восмёрка', 9: 'девятка',}
+d3 = {1: 'единиц', 2: 'двоек', 3: 'троек', 4: 'четвёрок', 5: 'пятёрок', 6: 'шестёрок', 7: 'семёрок', 8: 'восмёрок', 9: 'девяток',}
 buffer = ''
 buffer_len = 1
 work_buffer = ''
@@ -24,21 +28,39 @@ with open('test(lab1).txt', 'r') as file: #открываем файл
                 break
         n1 = 0
         n2 = 0
-        for i in work_buffer: #проверяем является блок числом
+        num = 0
+        neg = 0
+        j = 1
+        if work_buffer != '':
+            if work_buffer[0] == '-':
+                work_buffer = work_buffer.replace('-', '')
+                neg = 1
+        for i in work_buffer: #проверяем является ли блок числом
             if i in arr:
                 n1 = 1
             else:
                 n1 = 0
                 break
+
         if len(work_buffer) > 1:
-            for i in range(len(work_buffer)-1): #прверяем состоит ли число из одной цифры
+            for i in range(len(work_buffer)-1): #проверяем состоит ли число из одной цифры
                 if work_buffer[i] == work_buffer[i+1]:
                     n2 = 1
+                    num = work_buffer[i]
+                    j += 1
                 else:
                     n2=0
                     break
         if n2 == 1 and n1 == 1:
-            print('1' * 120)
+            if j % 10 == 1:
+                print(f'{j} {d2[int(num)]}')
+            if j % 10 > 1 and j % 10 < 5:
+                print(f'{j} {d1[int(num)]}')
+            if j % 10 == 0 or j % 10 > 4 or (j % 100 < 20 and j % 100 > 10):
+                print(f'{j} {d3[int(num)]}')
         elif n1 == 1:
-            print(work_buffer[::-1])
+            if neg == 1:
+                print(work_buffer[::-1] + '-')
+            else:
+                print(work_buffer[::-1])
         work_buffer = ''
