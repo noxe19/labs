@@ -202,9 +202,6 @@ for i in C:
 
 ind = 0
 
-print(c1)
-print(c2, '\n')
-
 if c1 > c2:
     if n % 4 == 1 or n % 4 == 3:
         for i in range(0, n // 2 + 1):
