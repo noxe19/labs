@@ -24,8 +24,7 @@ class number:
         print("\nколличество выведенных чисел:", number.counter_num)
 
     def show_num(self):
-        print(self.num)
-        number.counter_num += 1
+        return self.num
 
 
 sbl = ['0', '2', '4', '6', '8']
@@ -53,12 +52,14 @@ for i in range(20, n + 1):
         if i // 100 > buf_i:
             buf_i += 1
             print(buf_num)
+            number.counter_num += 1
             buf_sum = 0
             buf_num = 0
         elif buf_sum < num_obj.sum_digits:
             buf_sum = num_obj.sum_digits
-            buf_num = num_obj.num
+            buf_num = num_obj.show_num()
     if i == n:
         print(buf_num)
+        number.counter_num += 1
 
 num_obj.show_counter_num()

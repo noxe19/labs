@@ -30,8 +30,8 @@ class number:
         number.counter_num = 0
 
     def show_num(self):
-        print(self.num)
         number.counter_num += 1
+        return self.num
 
 
 sbl_arr = ['0', '2', '4', '6', '8']
@@ -76,12 +76,14 @@ def calculations(n):
             if i // 100 > buf_i:
                 buf_i += 1
                 arr += (str(buf_num) + "\n")
+                number.counter_num += 1
                 buf_sum = 0
                 buf_num = 0
             elif buf_sum < num_obj.sum_digits:
                 buf_sum = num_obj.sum_digits
-                buf_num = num_obj.num
+                buf_num = num_obj.show_num()
         if i == n:
+            number.counter_num += 1
             arr += (str(buf_num) + "\n")
     print(arr)
 
