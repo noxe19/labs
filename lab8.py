@@ -15,6 +15,7 @@
 
 from tkinter import *
 from tkinter.scrolledtext import ScrolledText
+from tkinter import font
 
 
 class number:
@@ -98,7 +99,8 @@ root = Tk()
 root.title("окно ввода")
 root.geometry("400x200")
 
-lab = Label(text="Введите любое натурально число, которое больше 19:")
+font_txt = font.Font(size=11)
+lab = Label(text="Введите любое натурально число, которое больше 19:", font=font_txt)
 ent = Entry(width=20)
 but = Button(text="Преобразовать")
 
