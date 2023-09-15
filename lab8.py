@@ -55,10 +55,8 @@ def calculations(n):
     output.title("окно вывода")
     output.geometry("400x200")
 
-    output_lab = Label(output, text="вывод")
-    close_button = Button(output, text="Закрыть окно", command=lambda: output.destroy())
+    output_lab = Label(output, text="вывод", font=font2)
     st = ScrolledText(output)
-
     output_lab.pack()
 
     buf_num = 0
@@ -88,19 +86,19 @@ def calculations(n):
             arr += (str(buf_num) + "\n")
     print(arr)
 
-
     num_obj.show_counter_num()
     st.insert("1.0", arr)
+    st.configure(state='disabled')
     st.pack()
-    close_button.pack(anchor="center", expand=1)
 
 
 root = Tk()
 root.title("окно ввода")
 root.geometry("400x200")
 
-font_txt = font.Font(size=11)
-lab = Label(text="Введите любое натурально число, которое больше 19:", font=font_txt)
+font1 = font.Font(size=11)
+font2 = font.Font(size=0)
+lab = Label(text="Введите любое натурально число, которое больше 19:", font=font1)
 ent = Entry(width=20)
 but = Button(text="Преобразовать")
 
