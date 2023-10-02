@@ -12,54 +12,51 @@
 '''
 
 
-class number:
-    counter_num = 0
+class Number:
 
-    def __init__(self, num, sum_digits, even_digits):
-        self.num = num
-        self.sum_digits = sum_digits
-        self.even_digits = even_digits
+    def __init__(self, start_num, end_num, step):
+        self.start_num = start_num
+        self.end_num = end_num
+        self.step = step
 
-    def show_counter_num(self):
-        print("\nколличество выведенных чисел:", number.counter_num)
+    @staticmethod
+    def suitable_number(i):
+        k = 0
+        summ = 0
+        for j in str(i):
+            if j in sbl:
+                summ += int(j)
+                k += 1
+        return k, summ
 
-    def show_num(self):
-        return self.num
-
+    def dk(self):
+        buf_num = 0
+        buf_sum = 0
+        buf_i = 0
+        for i in range(self.start_num, self.end_num + 1, self.step):
+            k, summ = number.suitable_number(i)
+            if 1 < k < 4:
+                if i // 100 > buf_i:
+                    buf_i += 1
+                    print(buf_num)
+                    buf_sum = 0
+                    buf_num = 0
+                elif buf_sum < summ:
+                    buf_sum = summ
+                    buf_num = i
+            if i == n:
+                print(buf_num)
 
 sbl = ['0', '2', '4', '6', '8']
 
 while True:
-    n = input("Введите любое натурально число, которое больше 19: ")
+    print("Выводит все натуральные числа до n, с максимальной суммой цифр в интервалах от 0 до 100, от 100 до 200 и т.д.,\n в записи которых встречается от 2 до 3 четных цифр.")
+    n = input("Введите любое натурально число 'n', которое больше 19: ")
     if n.isdigit():
         n = int(n)
-        break
+        if n > 19:
+            break
 
-
-buf_num = 0
-buf_sum = 0
-buf_i = 0
-for i in range(20, n + 1):
-    k = 0
-    summ = 0
-    for j in str(i):
-        if j in sbl:
-            summ += int(j)
-            k += 1
-
-    num_obj = number(i, summ, k)
-    if num_obj.even_digits >= 2:
-        if i // 100 > buf_i:
-            buf_i += 1
-            print(buf_num)
-            number.counter_num += 1
-            buf_sum = 0
-            buf_num = 0
-        elif buf_sum < num_obj.sum_digits:
-            buf_sum = num_obj.sum_digits
-            buf_num = num_obj.show_num()
-    if i == n:
-        print(buf_num)
-        number.counter_num += 1
-
-num_obj.show_counter_num()
+number = Number(20, n, 1)
+number.dk()
+print("конец работы")

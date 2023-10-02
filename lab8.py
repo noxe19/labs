@@ -15,24 +15,7 @@
 
 from tkinter import *
 from tkinter.scrolledtext import ScrolledText
-from tkinter import font
-
-
-class number:
-    counter_num = 0
-
-    def __init__(self, num, sum_digits, even_digits):
-        self.num = num
-        self.sum_digits = sum_digits
-        self.even_digits = even_digits
-
-    def show_counter_num(self):
-        print("\nколличество выведенных чисел:", number.counter_num)
-        number.counter_num = 0
-
-    def show_num(self):
-        number.counter_num += 1
-        return self.num
+from tkinter.ttk import Progressbar
 
 
 sbl_arr = ['0', '2', '4', '6', '8']
@@ -44,67 +27,103 @@ def input_number(event):
     if n.isdigit():
         if int(n) < 20:
             n = int(ent.get())
+            lab.configure(text="Введите целое, положительное число, больше 19")
         else:
             calculations(int(n))
+    else:
+        lab.configure(text="Введите целое, положительное число, больше 19")
+
+
+def suitable_number(i):
+    k = 0
+    summ = 0
+    for j in str(i):
+        if j in sbl_arr:
+            summ += int(j)
+            k += 1
+    return k, summ
 
 
 def calculations(n):
+    progress = 0
+    progress_buf = 0
+    if n > 200000000:
+        step = n // 1000
+        progress_step = 1
+    else:
+        step = n // 100
+        progress_step = 10
+    progress_bar['value'] = progress
+    lab_info.configure(text="Ждите")
+    root.update()
+
     arr = ''
 
     output = Tk()
     output.title("окно вывода")
     output.geometry("400x200")
 
-    output_lab = Label(output, text="вывод", font=font2)
+    output_lab = Label(output, text="вывод")
     st = ScrolledText(output)
-    output_lab.pack()
+    output_lab.pack(pady=10)
 
     buf_num = 0
     buf_sum = 0
     buf_i = 0
     for i in range(20, n + 1):
-        k = 0
-        summ = 0
-        for j in str(i):
-            if j in sbl_arr:
-                summ += int(j)
-                k += 1
-
-        num_obj = number(i, summ, k)
-        if num_obj.even_digits >= 2:
+        if i == progress_buf + step:
+            progress_buf += step
+            progress += progress_step
+            progress_bar['value'] = progress
+            root.update()
+        k, summ = suitable_number(i)
+        if 1 < k < 4:
             if i // 100 > buf_i:
                 buf_i += 1
-                arr += (str(buf_num) + "\n")
-                number.counter_num += 1
+                arr += str(buf_num) + "\n"
                 buf_sum = 0
                 buf_num = 0
-            elif buf_sum < num_obj.sum_digits:
-                buf_sum = num_obj.sum_digits
-                buf_num = num_obj.show_num()
+            elif buf_sum < summ:
+                buf_sum = summ
+                buf_num = i
         if i == n:
-            number.counter_num += 1
-            arr += (str(buf_num) + "\n")
-    print(arr)
+            arr += str(buf_num) + "\n"
 
-    num_obj.show_counter_num()
     st.insert("1.0", arr)
     st.configure(state='disabled')
+    lab_info.configure(text="Готово")
     st.pack()
 
+
+def info_window():
+    info = Tk()
+    info.title("окно информации")
+    info.geometry("500x200")
+
+    info_lab = Label(info, text="Выводит все натуральные числа до n,\n с максимальной суммой цифр в интервалах от 0 до 100, от 100 до 200 и т.д.,\n в записи которых встречается от 2 до 3 четных цифр.")
+
+    info_but = Button(info, text="Ок", command=info.destroy)
+    info_lab.pack(pady=20)
+    info_but.pack()
+
+
+info_window()
 
 root = Tk()
 root.title("окно ввода")
 root.geometry("400x200")
 
-font1 = font.Font(size=11)
-font2 = font.Font(size=0)
-lab = Label(text="Введите любое натурально число, которое больше 19:", font=font1)
-ent = Entry(width=20)
-but = Button(text="Преобразовать")
+lab = Label(root, text="Введите любое натурально число, которое больше 19:")
+ent = Entry(root, width=20)
+but = Button(root, text="Преобразовать")
+lab_info = Label(root, text="программа готова к работе")
+progress_bar = Progressbar(root, orient="horizontal", mode="determinate", maximum=1000, value=0)
 
-lab.pack()
+lab.pack(side=TOP, pady=5)
 ent.pack()
-but.pack()
+but.pack(pady=10)
+progress_bar.pack(pady=20, side=BOTTOM, fill=X)
+lab_info.pack(side=BOTTOM)
 
 but.bind('<Button-1>', input_number)
 
