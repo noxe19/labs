@@ -1,5 +1,3 @@
-
-from random import *
 from tkinter import *
 
 player = "X"
