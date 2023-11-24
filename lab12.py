@@ -59,10 +59,8 @@ while True:
     result = matrix_det / factorial_n
     matrix_fun(buf_sign, result)
     buf_sign *= -1
-    #print(result_num)
     print(format(result_num, f'.{buf_eps}f'))
     i += 1
 
 
-#print("\nОтвет: ", result_num)
 print("\nОтвет: ", format(result_num, f'.{buf_eps}f'))
