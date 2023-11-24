@@ -8,52 +8,61 @@ from random import randint
 from random import uniform
 import numpy as np
 
+while True:
+    eps = input("До какого знака, после запятой, считать сумму ряда: ")
+    if eps.isdigit():
+        eps = int(eps)
+        if eps > 0:
+            break
 
+buf_eps = eps
+eps = 1 / (10 ** eps)
+print(eps, "\n")
+
+factorial_n = 1
 k = randint(1, 10)
-
 
 matrix = np.array([[uniform(-1, 1) for j in range(k)] for i in range(k)])
 result_matrix = matrix.copy()
 result = 0
 print(matrix, "\n")
 
-
-def matrix_fun(result_matrix, num, divider, sign):
-    global result
-
-    result_matrix = result_matrix * 2 * num
-    matrix_det = np.linalg.det(result_matrix)
-    if sign == "+":
-        result += matrix_det / divider
-    else:
-        result -= matrix_det / divider
-    return result
-
-
-def factorial(num):
-    result = 1
-    if num == 0:
-        return result
-    else:
-        while num != 1:
-            result *= num
-            num -= 1
-        return result
-
-
-buf_sign = "+"
+buf_sign = 1
 result_num = 0
-i = 1
-while i != 12:
-    flag = i
-    n = 2 * i
-    factorial_n = factorial(n-1)
-    result = matrix_fun(result_matrix, n, factorial_n, buf_sign)
-    if buf_sign == "+":
-        buf_sign = "-"
-    else:
-        buf_sign = "+"
-    i += 1
-    print(result)
-print("\nОтвет: ", result)
+while_stop = False
 
+
+def matrix_fun(sign, num):
+    global result_num
+    global while_stop
+    if abs(result) > eps:
+        if i == 1:
+            result_num += abs(num)
+        else:
+            result_num += num * sign
+    else:
+        while_stop = True
+
+
+i = 1
+j = 1
+while True:
+    if while_stop:
+        break
+    n = i * 2
+    factorial_n *= j
+    j += 1
+    factorial_n *= j
+    result_matrix *= n
+    matrix_det = np.linalg.det(result_matrix)
+    result_matrix = matrix.copy()
+    result = matrix_det / factorial_n
+    matrix_fun(buf_sign, result)
+    buf_sign *= -1
+    #print(result_num)
+    print(format(result_num, f'.{buf_eps}f'))
+    i += 1
+
+
+#print("\nОтвет: ", result_num)
+print("\nОтвет: ", format(result_num, f'.{buf_eps}f'))
