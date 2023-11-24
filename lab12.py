@@ -46,13 +46,15 @@ def matrix_fun(sign, num):
 
 i = 1
 j = 1
+buf_j = 1
 while True:
     if while_stop:
         break
     n = i * 2
-    factorial_n *= j
-    j += 1
-    factorial_n *= j
+    for c in range(j, n+1):
+        factorial_n *= c
+        buf_j += 1
+    j = buf_j
     result_matrix *= n
     matrix_det = np.linalg.det(result_matrix)
     result_matrix = matrix.copy()
