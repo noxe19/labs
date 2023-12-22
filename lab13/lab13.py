@@ -1,3 +1,11 @@
+"""
+1.Прочитать в виде списков набор данных
+2.Для прочитанного набора выполнить обработку в соответствии со своим
+вариантом. Библиотекой pandas пользоваться нельзя.
+
+10.	Определить количество детей(<18)  на борту в возрастном интервале
+средний возраст +- 10 позиций и сколько из них выжило
+"""
 import csv
 
 average_age = 0
@@ -20,8 +28,10 @@ with open('Titanic-Dataset.csv', 'r') as file:
 
 count_survived_children = 0
 average_age = average_age // count_children
+count_children = 0
 for i in buf:
     if i[0] in range(average_age - error, average_age + error + 1):
+        count_children += 1
         if int(i[1]) == 1:
             count_survived_children += 1
 
